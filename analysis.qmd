@@ -9,6 +9,12 @@ execute:
 #| message: false
 library(tidyverse) 
 library(primer.data)
+library(tidymodels)
+library(broom)
+library(easystats)
+library(gt)
+library(marginaleffects)
+
 ```
 
 ```{r}
@@ -19,6 +25,72 @@ x <- nhanes |>
   select(height, sex) |>
   drop_na() |>
   slice_sample(n = 50) 
+
+fit_height<-linear_reg()|>fit(height ~ sex, data = x)
+
 ```
 
-A persons heights is dependent on many factors related to their genetics and health. By examining data on USMC recruits from 2009-2011 from the National Health and Nutrition Examination Survey, we will attempt to answer the question "What is the average height of male and female USMC recruits?"
+$$
+g(\mathbb{E}[Y]) = \eta = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p
+$$
+
+$$
+\widehat{\text{height}} = 162.0 + 15.9 \cdot \text{sex}_{\text{Male}}
+$$
+
+
+$$\\widehat{\\text{height}} = 162.0 + 15.9 \\cdot \\text{sex}_{\\text{Male}}$$
+
+```{r}
+
+tidy(fit_height, conf.int = TRUE) |>
+  mutate(term = recode(term,
+                       "(Intercept)" = "Intercept",
+                       "sexMale" = "Sex: Male")) |>
+  select(Term = term,
+         Estimate = estimate,
+         `Std. Error` = std.error,
+         Statistic = statistic,
+         `p-value` = p.value,
+         `95% CI Low` = conf.low,
+         `95% CI High` = conf.high) |>
+  gt() |>
+  fmt_number(
+    columns = where(is.numeric),
+    decimals = 2
+  ) |>
+  tab_header(
+    title = "Linear Model Results: Height ~ Sex"
+  )
+```
+
+```{r}
+preds <- tibble(
+  estimate = c(178.75, 161.7107),
+  conf.low = c(175.9551, 159.2333),
+  conf.high = c(181.5449, 164.1881),
+  sex = c("Male", "Female")
+)
+
+# Create the plot
+preds |>
+  ggplot(aes(x = sex, y = estimate, fill = sex)) +
+  geom_col(width = 0.6, color = "black", alpha = 0.8) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2, linewidth = 1.2) +
+  geom_text(aes(label = round(estimate, 1)), vjust = -0.5, size = 5) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "Predicted Height by Sex",
+    subtitle = "Including 95% Confidence Intervals",
+    x = "Sex",
+    y = "Predicted Height (cm)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(margin = margin(b = 10))
+  )
+```
+
+A persons heights is dependent on many factors related to their genetics and health. By examining data on USMC recruits from 2009-2011 from the National Health and Nutrition Examination Survey, we will attempt to answer the question "What is the average height of male and female USMC recruits?" The assumption of stability may not hold in this case because of changes in population demographics overtime. I model height, measured in cm, as a linear function sex. The average height of female recruits is about 162cm and male recruits are about 15cm taller on average.

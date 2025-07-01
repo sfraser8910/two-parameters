@@ -1,2 +1,6 @@
 
 analysis_files
+
+*_cache
+
+/.quarto/

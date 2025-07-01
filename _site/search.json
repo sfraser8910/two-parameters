@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "yes/about.html",
+    "href": "yes/about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "analysis.html",
+    "href": "analysis.html",
+    "title": "Two-Parameters",
+    "section": "",
+    "text": "\\[\ng(\\mathbb{E}[Y]) = \\eta = \\beta_0 + \\beta_1 X_1 + \\beta_2 X_2 + \\cdots + \\beta_p X_p\n\\]\n\\[\n\\widehat{\\text{height}} = 162.0 + 15.9 \\cdot \\text{sex}_{\\text{Male}}\n\\]\n\\[\\\\widehat{\\\\text{height}} = 162.0 + 15.9 \\\\cdot \\\\text{sex}_{\\\\text{Male}}\\]\n\n\n\n\n\n\n\n\nLinear Model Results: Height ~ Sex\n\n\nTerm\nEstimate\nStd. Error\nStatistic\np-value\n95% CI Low\n95% CI High\n\n\n\n\nIntercept\n162.18\n1.22\n132.76\n0.00\n159.72\n164.63\n\n\nSex: Male\n15.94\n1.80\n8.85\n0.00\n12.32\n19.56\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA persons heights is dependent on many factors related to their genetics and health. By examining data on USMC recruits from 2009-2011 from the National Health and Nutrition Examination Survey, we will attempt to answer the question “What is the average height of male and female USMC recruits?” The assumption of stability may not hold in this case because of changes in population demographics overtime. I model height, measured in cm, as a linear function sex. The average height of female recruits is about 162cm and male recruits are about 15cm taller on average."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Two-Parameters",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "yes/index.html",
+    "href": "yes/index.html",
+    "title": "yes",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  }
+]
